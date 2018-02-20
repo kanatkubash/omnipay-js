@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "es2017",
+        "module": "commonjs",
+        "sourceMap": true,
+        "outDir": "dist",
+        "noImplicitAny": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "baseUrl": "./src",
+        "allowSyntheticDefaultImports": true,
+        // "typeRoots": [
+        //     "node_modules/@types",
+        //     "typings"
+        // ]
+        "paths": {
+            "*": [
+                "node_modules/@types"
+            ],
+            "js-money": [
+                "typings/js-money"
+            ]
+        }
+    }
+}
