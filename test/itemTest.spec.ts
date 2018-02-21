@@ -1,11 +1,20 @@
 import { expect } from 'chai';
-import * as Money from 'js-money';
 import Item from '../src/Item';
 require('mocha');
 describe('Item', () => {
 	it('should construct with params', () => {
 		var item = new Item({ name: 'Jeski Disk' });
 		expect(item.name).to.equal('Jeski Disk');
+	})
+	it('should initalize without params', () => {
+		var item = new Item();
+		item.initialize();
+		expect(item.parameters).to.eql({});
+	})
+	it('shouldnot change parameters', () => {
+		var item = new Item({ name: 'Fuse Tea' });
+		item.parameters['name'] = 'Lipton';
+		expect(item.parameters['name']).to.equal('Fuse Tea');
 	})
 	var item = new Item();
 	it('should init correctly', () => {

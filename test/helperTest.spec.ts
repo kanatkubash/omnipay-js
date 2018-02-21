@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as chai from 'chai';
 import * as sinonChai from 'sinon-chai';
-import { validateLuhn, initialize } from '../src/helpers';
+import { validateLuhn, initialize, getGatewayShortName } from '../src/helpers';
 import * as sinon from 'sinon';
 import { spy } from 'sinon';
 import CreditCard from '../src/CreditCard';
@@ -32,6 +32,9 @@ describe('Helper', () => {
 		it('should ignore null', () => {
 			initialize({}, null);
 		})
+		it('construct with empty params', () => {
+			initialize({});
+		})
 		it('should call setters', () => {
 			var nameSpy = sinon.spy(), numberSpy = sinon.spy();
 			var card = sinon.createStubInstance(CreditCard);
@@ -50,6 +53,9 @@ describe('Helper', () => {
 			var nameSpy = sinon.spy(testClass, 'name', ['set']);
 			initialize(testClass, { name: 'name', extra: 'ba' });
 			expect(nameSpy.set).to.have.been.calledWith('name').calledOnce;
+		})
+		it('to fill up code coverage', () => {
+			getGatewayShortName();
 		})
 	})
 })

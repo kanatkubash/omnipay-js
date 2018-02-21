@@ -1,5 +1,6 @@
 import IItem from './IItem';
 import { initialize as initializeHelper } from './helpers'
+import * as _ from 'lodash';
 interface IObject {
 	[key: string]: any;
 }
@@ -27,38 +28,38 @@ export default class Item implements IItem {
 	 * Get all parameters of Item
 	 */
 	get parameters(): IObject {
-		return this._parameters;
+		return _.clone(this._parameters);
 	}
 	/** @inheritdoc */
 	get name() {
-		return this.parameters['name'];
+		return this._parameters['name'];
 	}
 	/** @inheritdoc */
 	set name(value: string) {
-		this.parameters['name'] = value;
+		this._parameters['name'] = value;
 	}
 	/** @inheritdoc */
 	get description() {
-		return this.parameters['description'];
+		return this._parameters['description'];
 	}
 	/** @inheritdoc */
 	set description(value: string) {
-		this.parameters['description'] = value;
+		this._parameters['description'] = value;
 	}
 	/** @inheritdoc */
 	get quantity() {
-		return this.parameters['quantity'];
+		return this._parameters['quantity'];
 	}
 	/** @inheritdoc */
 	set quantity(value: number) {
-		this.parameters['quantity'] = value;
+		this._parameters['quantity'] = value;
 	}
 	/** @inheritdoc */
 	get price() {
-		return this.parameters['price'];
+		return this._parameters['price'];
 	}
 	/** @inheritdoc */
 	set price(value: number) {
-		this.parameters['price'] = value;
+		this._parameters['price'] = value;
 	}
 }
