@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "es2017",
-        "module": "commonjs",
+        "module": "none",
         "sourceMap": true,
         "outDir": "dist",
         "noImplicitAny": true,
@@ -13,6 +13,14 @@
         "typeRoots": [
             "node_modules/@types",
             "typings"
+        ],
+        "types": [
+            "js-money"
         ]
-    }
+    },
+    "exclude": [
+        "**/*.d.ts",
+        "**/*.spec.ts",
+        "../node_modules"
+    ]
 }
