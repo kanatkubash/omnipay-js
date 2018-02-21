@@ -9,18 +9,10 @@
         "experimentalDecorators": true,
         "moduleResolution": "node",
         "baseUrl": "./src",
-        "allowSyntheticDefaultImports": true,
-        // "typeRoots": [
-        //     "node_modules/@types",
-        //     "typings"
-        // ]
-        "paths": {
-            "*": [
-                "node_modules/@types"
-            ],
-            "js-money": [
-                "typings/js-money"
-            ]
-        }
+        // "allowSyntheticDefaultImports": true,
+        "typeRoots": [
+            "node_modules/@types",
+            "typings"
+        ]
     }
 }
