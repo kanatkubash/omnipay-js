@@ -35,9 +35,9 @@ declare class Money {
 	constructor(amount: number, currency: Currencies | Currency);
 	amount: number;
 	currency: Currency;
-	fromInteger(amount: number, currency: Currencies | Currency): Money;
-	fromDecimal(amount: number, currency: Currencies | Currency): Money;
-	fromDecimal(amount: number, currency: Currencies | Currency, rounder: Rounders | RoundFunction): Money;
+	static fromInteger(amount: number, currency: Currencies | Currency): Money;
+	static fromDecimal(amount: number, currency: Currencies | Currency): Money;
+	static fromDecimal(amount: number, currency: Currencies | Currency, rounder: Rounders | RoundFunction): Money;
 	equals(other: Money): boolean;
 	add(other: Money): Money;
 	subtract(other: Money): Money;
@@ -311,6 +311,7 @@ declare interface CurrencyObjects {
 	ZMK: Currency;
 }
 declare var S: CurrencyObjects;
+declare namespace S { }
 declare module 'js-money/lib/currency' {
-	export default S;
+	export = S;
 }
