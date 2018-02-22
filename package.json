@@ -4,7 +4,7 @@
   "description": "Omnipay port JS",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/ts-mocha -p ./ ./test/abstractRequestTest.spec.ts",
+    "test": "./node_modules/.bin/ts-mocha -p ./ ./test/*.spec.ts",
     "tsc": "tsc -p .",
     "tsc-test": "tsc -p ./test/",
     "istanbul": "./node_modules/.bin/istanbul cover _mocha dist/test/*.spec.js && see ./coverage/lcov-report/index.html"

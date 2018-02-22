@@ -79,8 +79,9 @@ export default abstract class AbstractRequest implements IRequest {
 	}
 	get money(): Money {
 		var amount = this._parameters['amount'];
-		if (amount instanceof Money)
-			return amount;
+		// Not even called in tests, maybe remove
+		// if (amount instanceof Money);
+		// return amount;
 		if (amount) {
 			var currency = this.currency || 'KZT';
 			var number = Number(amount);

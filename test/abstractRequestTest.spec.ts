@@ -10,7 +10,7 @@ import IClient from '../src/http/IClient';
 import IHttpResponse from 'http/IHttpResponse';
 import ItemBag from '../src/ItemBag';
 import Item from '../src/Item';
-import * as JsMoney from 'js-money';
+import * as Money from 'js-money';
 import IResponse from '../src/message/IResponse';
 import RequestError from '../src/exception/RequestError';
 import CreditCard from '../src/CreditCard';
@@ -278,6 +278,12 @@ describe('AbstractRequest', () => {
 		req.cancelUrl = cancelUrl;
 		expect(req.cancelUrl).to.be.equal(cancelUrl);
 	})
+	it('should set and get testMode correctly', () => {
+		var req = container.resolve(MoqRequest);
+		var testMode = true;
+		req.testMode = testMode;
+		expect(req.testMode).to.be.equal(testMode);
+	})
 	it('should set notifyUrl correctly', () => {
 		var req = container.resolve(MoqRequest);
 		var notifyUrl = 'http://a.b';
@@ -337,6 +343,13 @@ describe('AbstractRequest', () => {
 		var req = container.resolve(MoqRequest);
 		expect(() => req.response)
 			.to.throw(Error, 'You must call send() before accessing response');
+	})
+	it('should get money class after getting amount', () => {
+		var req = container.resolve(MoqRequest);
+		req.amount = '15.15';
+		expect(req.amount).to.be.equal('15.15');
+		expect(req.amount).to.be.equal('15.15');
+		expect(req.money).to.be.instanceOf(Money);
 	})
 	it(`should return correct response.\r\n`
 		+ `In fact test is useless as impl. of send() is inside test`, async () => {
