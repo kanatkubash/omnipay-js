@@ -15,7 +15,10 @@
             "typings"
         ],
         "types": [
-            "js-money"
+            "js-money",
+            "node",
+            "mocha",
+            "chai"
         ]
     },
     "exclude": [

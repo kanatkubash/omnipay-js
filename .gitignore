@@ -3,3 +3,4 @@ dist
 *.js
 coverage
 *.js.map
+.nyc_output
