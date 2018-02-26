@@ -248,6 +248,7 @@ describe('AbstractRequest', () => {
 		var req = container.resolve(MoqRequest);
 		req.items = [{ name: 'FuseTea' }, { name: 'Haier' }];
 		expect(req.items).to.be.instanceOf(ItemBag);
+		// @ts-ignore
 		var itemBag: ItemBag = req.items as ItemBag;
 		expect(itemBag.items).to.have.lengthOf(2);
 		expect(itemBag.items[0].name).to.be.equal('FuseTea');

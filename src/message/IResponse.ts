@@ -1,7 +1,7 @@
 import IMessage from './IMessage';
 import IRequest from './IRequest';
 
-export default interface IResponse {
+export default interface IResponse extends IMessage {
 	request: IRequest;
 	isSuccesful?: boolean;
 	isRedirect?: boolean;

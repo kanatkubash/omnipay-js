@@ -50,6 +50,7 @@ describe('Helper', () => {
 				set name(value: string) { }
 			}
 			var testClass = new TestClass;
+			// @ts-ignore
 			var nameSpy = sinon.spy(testClass, 'name', ['set']);
 			initialize(testClass, { name: 'name', extra: 'ba' });
 			expect(nameSpy.set).to.have.been.calledWith('name').calledOnce;

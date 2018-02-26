@@ -1,4 +1,4 @@
-export default interface IRedirectInterface {
+export default interface IRedirectResponse {
 	redirectUrl?: string;
 	redirectMethod?: 'GET' | 'POST';
 	redirectData?: Object;
