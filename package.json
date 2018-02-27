@@ -2,7 +2,7 @@
   "name": "omnipay-js",
   "version": "0.0.1",
   "description": "Omnipay port JS",
-  "main": "index.js",
+  "main": "Omnipay.ts",
   "scripts": {
     "test": "./node_modules/.bin/ts-mocha -p ./ ./test/*.spec.ts",
     "tsc": "tsc -p .",
