@@ -4,3 +4,4 @@ dist
 coverage
 *.js.map
 .nyc_output
+php-omnipay-common

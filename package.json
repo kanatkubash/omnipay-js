@@ -46,7 +46,7 @@
       "src/**/*.ts"
     ],
     "extension": [
-      ".ts",
+      ".ts"
     ],
     "require": [
       "ts-node/register"
