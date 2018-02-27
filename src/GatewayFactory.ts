@@ -20,7 +20,8 @@ export class GatewayFactory {
 	public get gateways() {
 		return Object.keys(this._gateways);
 	}
-	public create(name: string): AbstractGateway {
+	/// TODO:require gateway dynamically
+	public create(name: string): any {
 		var gateway = this._gateways[name];
 		if (!gateway)
 			throw new Error('No such gateway');
@@ -28,8 +29,8 @@ export class GatewayFactory {
 	}
 }
 
-export var gateway = (name: string) => {
-	return <T extends AbstractGateway>(constructor: GatewayConstructor): GatewayConstructor => {
+export var gateway = (name: string): any => {
+	return <T extends AbstractGateway>(constructor: GatewayConstructor) => {
 		gateways[name] = constructor;
 		return constructor;
 	};

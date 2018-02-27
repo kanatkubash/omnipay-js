@@ -13,8 +13,8 @@ interface IObject {
 export default abstract class AbstractResponse implements IResponse {
 	protected readonly _request: IRequest;
 	protected _data: IObject = {};
-	isSuccesful?: boolean;
-	transactionRefernce?: string;
+	abstract isSuccesful: boolean;
+	abstract transactionRefernce: string;
 	get request() {
 		return this._request;
 	}

@@ -9,11 +9,13 @@ import { initialize as initializeHelper } from '../helpers';
 import ItemBag from './../ItemBag';
 import Item from './../Item';
 import * as _ from 'lodash';
-import { Container, injectable, inject } from "inversify";
+/// REMARK: IF NOT TESTING COMMENT IT 
+import { Container, injectable, inject } from 'inversify';
 
 interface IObject {
 	[key: string]: any;
 }
+/// REMARK: IF NOT TESTING COMMENT IT 
 @injectable()
 export default abstract class AbstractRequest implements IRequest {
 	[key: string]: any;
@@ -84,6 +86,7 @@ export default abstract class AbstractRequest implements IRequest {
 		// return amount;
 		if (amount) {
 			var currency = this.currency || 'KZT';
+			// tslint:disable-next-line:variable-name
 			var number = Number(amount);
 			if (Number.isNaN(number))
 				throw new Error('Amount should be correct number');
@@ -91,7 +94,7 @@ export default abstract class AbstractRequest implements IRequest {
 			if (fractionCount > Currencies[currency].decimal_digits)
 				throw new RequestError(`Precision is too high for given currency`, {
 					currency,
-					amount
+					amount,
 				});
 			var money = Money.fromDecimal(number, currency);
 			if (money.isNegative() && !this._negativeAmountAllowed)
@@ -128,7 +131,7 @@ export default abstract class AbstractRequest implements IRequest {
 	set currency(value: string) {
 		this.throwIfCantSet;
 		var newValue = (value || '').toUpperCase();
-		if (this.currencies.indexOf(newValue) != -1)
+		if (this.currencies.indexOf(newValue) !== -1)
 			this._parameters['currency'] = newValue;
 	}
 	get transactionId() {
@@ -197,9 +200,9 @@ export default abstract class AbstractRequest implements IRequest {
 		var unsetKeys: string[] = [];
 		if (Array.isArray(keys))
 			for (var i = 0; i < keys.length; i++)
-				if (typeof this._parameters[keys[i]] == 'undefined')
+				if (typeof this._parameters[keys[i]] === 'undefined')
 					unsetKeys.push(keys[i]);
-		if (unsetKeys.length != 0)
+		if (unsetKeys.length !== 0)
 			throw new RequestError(`Parameters not set`, { keys: unsetKeys });
 		return true;
 	}
