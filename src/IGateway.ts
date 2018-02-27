@@ -1,6 +1,4 @@
-interface IObject {
-	[key: string]: any;
-}
+import { IObject } from './interfaces';
 
 export default interface IGateway {
 	name: string;

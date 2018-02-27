@@ -1,6 +1,5 @@
 import 'reflect-metadata';
-import { Container, injectable, inject } from "inversify";
-import { expect } from 'chai';
+import { Container, injectable, inject } from 'inversify';
 import * as sinon from 'sinon';
 import * as chai from 'chai';
 import * as sinonChai from 'sinon-chai';
@@ -15,6 +14,7 @@ import IResponse from '../src/message/IResponse';
 import RequestError from '../src/exception/RequestError';
 import CreditCard from '../src/CreditCard';
 chai.use(require('sinon-chai'));
+var expect = chai.expect;
 require('mocha');
 
 interface IObject {
@@ -35,7 +35,7 @@ class MoqRequest extends AbstractRequest {
 	setNegativeAllow(value: boolean) {
 		this._negativeAmountAllowed = value;
 	}
-	constructor( @inject('IClient') client: IClient) { super(client); }
+	constructor(@inject('IClient') client: IClient) { super(client); }
 }
 @injectable()
 class MoqClient implements IClient {
@@ -43,10 +43,10 @@ class MoqClient implements IClient {
 		throw new Error("Method not implemented.");
 	}
 	get(uri: string, headers: Object, queryObj: Object): IHttpResponse {
-		throw new Error("Method not implemented.");
+		throw new Error('Method not implemented.');
 	}
 	post(uri: string, headers: Object, postBody: Object): IHttpResponse {
-		throw new Error("Method not implemented.");
+		throw new Error('Method not implemented.');
 	}
 }
 
@@ -166,7 +166,7 @@ describe('AbstractRequest', () => {
 			var req = container.resolve(MoqRequest);
 			req.amount = '103500000';
 			expect(req.amount).to.be.equal('103500000.00');
-		})
+		});
 		it('should throw for fractional JPY (JPY\'s dont have)', () => {
 			var req = container.resolve(MoqRequest);
 			req.amount = '12.5';
@@ -182,9 +182,9 @@ describe('AbstractRequest', () => {
 			var req = container.resolve(MoqRequest);
 			req.amount = '10';
 			expect(req.amountInteger).to.be.equal(1000);
-		})
+		});
 		it('should return same integer for BYR', () => {
-			///BYR JPY dont have fractionals;
+			/// BYR JPY dont have fractionals;
 			var req = container.resolve(MoqRequest);
 			req.amount = '5';
 			req.currency = 'BYR';
@@ -194,13 +194,13 @@ describe('AbstractRequest', () => {
 			var req = container.resolve(MoqRequest);
 			req.amount = '10,1000.00';
 			expect(() => req.amount).to.throw(Error);
-		})
+		});
 		it('should throw to multi period amount 1.2.3', () => {
 			var req = container.resolve(MoqRequest);
 			req.amount = '12.34.56';
 			expect(() => req.amount).to.throw(Error);
 		})
-	})
+	});
 	describe('currency', () => {
 		it('should set currency correctly', () => {
 			var req = container.resolve(MoqRequest);
@@ -225,25 +225,25 @@ describe('AbstractRequest', () => {
 			req.currency = currency;
 			expect(req.currency).to.be.undefined;
 		})
-	})
+	});
 	it('should set description correctly', () => {
 		var req = container.resolve(MoqRequest);
 		var description = 'desc';
 		req.description = description;
 		expect(req.description).to.be.equal(description);
-	})
+	});
 	it('should set transactionId correctly', () => {
 		var req = container.resolve(MoqRequest);
 		var transactionId = 521;
 		req.transactionId = transactionId;
 		expect(req.transactionId).to.be.equal(transactionId);
-	})
+	});
 	it('should set transactionReference correctly', () => {
 		var req = container.resolve(MoqRequest);
 		var transactionReference = 'trRef';
 		req.transactionReference = transactionReference;
 		expect(req.transactionReference).to.be.equal(transactionReference);
-	})
+	});
 	it('should set items from array argument', () => {
 		var req = container.resolve(MoqRequest);
 		req.items = [{ name: 'FuseTea' }, { name: 'Haier' }];
@@ -253,50 +253,50 @@ describe('AbstractRequest', () => {
 		expect(itemBag.items).to.have.lengthOf(2);
 		expect(itemBag.items[0].name).to.be.equal('FuseTea');
 		expect(itemBag.items[1].name).to.be.equal('Haier');
-	})
+	});
 	it('should set items from array argument', () => {
 		var req = container.resolve(MoqRequest);
 		var itemBag = new ItemBag([{ name: 'FuseTea' }, { name: 'Haier' }]);
 		req.items = itemBag;
 		expect(req.items).to.be.instanceOf(ItemBag);
 		expect(itemBag.items).to.be.eql(req.items.items);
-	})
+	});
 	it('should set clientIp correctly', () => {
 		var req = container.resolve(MoqRequest);
 		var clientIp = '12.34.5.8';
 		req.clientIp = clientIp;
 		expect(req.clientIp).to.be.equal(clientIp);
-	})
+	});
 	it('should set returnUrl correctly', () => {
 		var req = container.resolve(MoqRequest);
 		var returnUrl = 'http://s.i';
 		req.returnUrl = returnUrl;
 		expect(req.returnUrl).to.be.equal(returnUrl);
-	})
+	});
 	it('should set cancelUrl correctly', () => {
 		var req = container.resolve(MoqRequest);
 		var cancelUrl = 'http://a.b';
 		req.cancelUrl = cancelUrl;
 		expect(req.cancelUrl).to.be.equal(cancelUrl);
-	})
+	});
 	it('should set and get testMode correctly', () => {
 		var req = container.resolve(MoqRequest);
 		var testMode = true;
 		req.testMode = testMode;
 		expect(req.testMode).to.be.equal(testMode);
-	})
+	});
 	it('should set notifyUrl correctly', () => {
 		var req = container.resolve(MoqRequest);
 		var notifyUrl = 'http://a.b';
 		req.notifyUrl = notifyUrl;
 		expect(req.notifyUrl).to.be.equal(notifyUrl);
-	})
+	});
 	it('should set issuer correctly', () => {
 		var req = container.resolve(MoqRequest);
 		var issuer = 'BANK';
 		req.issuer = issuer;
 		expect(req.issuer).to.be.equal(issuer);
-	})
+	});
 	it('should return parameters correctly', () => {
 		var req = container.resolve(MoqRequest);
 		var testMode = true;
@@ -306,26 +306,26 @@ describe('AbstractRequest', () => {
 		req.token = token;
 		req.clientIp = clientIp;
 		expect(req.parameters).to.be.eql({ testMode, token, clientIp });
-	})
+	});
 	it('shouldnot change inner params from outside', () => {
 		var req = container.resolve(MoqRequest);
 		req.initialize({ token: '123' });
 		var params = req.parameters;
 		params.extra = 'extra';
 		expect(req.parameters).to.not.have.property('extra');
-	})
+	});
 	it('should throw when changing param after send()', async () => {
 		var req = container.resolve(MoqRequest);
 		await req.send();
 		expect(() => req.amount = '1')
 			.to.throw(Error, 'Cant change request after its sent');
-	})
+	});
 	it('should validate correctly given fields', () => {
 		var req = container.resolve(MoqRequest);
 		req.initialize({ token: 'asdf', testMode: false });
 		expect(req.validate()).to.be.ok;
 		expect(req.validate('token', 'testMode')).to.be.ok;
-	})
+	});
 	it('should throw non existent params when validating', () => {
 		var req = container.resolve(MoqRequest);
 		req.amount = '123';
@@ -335,27 +335,27 @@ describe('AbstractRequest', () => {
 			.that.has.property('data')
 			.that.has.property('keys')
 			.that.eql(['token']);
-	})
+	});
 	it('should return undef currency if not set', () => {
 		var req = container.resolve(MoqRequest);
 		expect(req.currency).to.be.undefined;
-	})
+	});
 	it('should throw when getting response before sending', () => {
 		var req = container.resolve(MoqRequest);
 		expect(() => req.response)
 			.to.throw(Error, 'You must call send() before accessing response');
-	})
+	});
 	it('should get money class after getting amount', () => {
 		var req = container.resolve(MoqRequest);
 		req.amount = '15.15';
 		expect(req.amount).to.be.equal('15.15');
 		expect(req.amount).to.be.equal('15.15');
 		expect(req.money).to.be.instanceOf(Money);
-	})
-	it(`should return correct response.\r\n`
-		+ `In fact test is useless as impl. of send() is inside test`, async () => {
-			var req = container.resolve(MoqRequest);
-			await req.send();
-			expect(req.response).to.be.instanceOf(AbstractResponse);
-		})
-})
+	});
+	it(`should return correct response.\r\n`, async () => {
+		console.log(`In fact test is useless as impl. of send() is inside test`);
+		var req = container.resolve(MoqRequest);
+		await req.send();
+		expect(req.response).to.be.instanceOf(AbstractResponse);
+	});
+});

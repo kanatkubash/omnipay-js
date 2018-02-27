@@ -1,15 +1,9 @@
-import * as _ from "lodash";
-import IGateway from "./GatewayInterface";
+import * as _ from 'lodash';
+import IGateway from './IGateway';
 import IClient from './http/IClient';
 import { initialize as initializeHelper } from './helpers';
-import AbstractRequest from "message/AbstractRequest";
-
-interface IObject {
-	[key: string]: any;
-}
-interface ReadIObject {
-	readonly [key: string]: any;
-}
+import AbstractRequest from 'message/AbstractRequest';
+import { IObject, ReadIObject } from './interfaces';
 
 export default abstract class AbstractGateway implements IGateway {
 	protected _parameters: IObject;
@@ -79,14 +73,16 @@ export default abstract class AbstractGateway implements IGateway {
 		});
 		initializeHelper(this, parameters);
 	}
-	protected _createRequest<T extends AbstractRequest>
-		(TRequest: new (client: IClient) => T,
+	// tslint:disable-next-line:function-name
+	protected _createRequest<T extends AbstractRequest>(
+		tRequest: new (client: IClient) => T,
 		parameters: IObject = {}): T {
-		var request = new TRequest(this._httpClient);
+		var request = new tRequest(this._httpClient);
 		request.initialize(parameters);
 		return request;
 	}
+	// tslint:disable-next-line:function-name
 	private _isFunctionExists(funcName: string): boolean {
-		return typeof Object.getPrototypeOf(this)[funcName] == 'function';
+		return typeof Object.getPrototypeOf(this)[funcName] === 'function';
 	}
 }

@@ -20,6 +20,6 @@
             "single"
         ],
         "no-var-keyword": false,
-        "prefer-const": false,
+        "prefer-const": false
     }
 }
