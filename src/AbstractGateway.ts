@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import IGateway from './IGateway';
 import IClient from './http/IClient';
 import { initialize as initializeHelper } from './helpers';
-import AbstractRequest from 'message/AbstractRequest';
+import AbstractRequest from './message/AbstractRequest';
 import { IObject, ReadIObject } from './interfaces';
 
 export default abstract class AbstractGateway implements IGateway {
