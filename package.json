@@ -1,6 +1,6 @@
 {
   "name": "omnipay-ts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Omnipay port TS",
   "main": "src/main.ts",
   "repository": {
