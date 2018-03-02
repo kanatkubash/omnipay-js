@@ -1,13 +1,10 @@
-import IRedirectResponse from "./IRedirectResponse";
-
-interface IObject {
-	[key: string]: any;
-}
+import IRedirectResponse from './IRedirectResponse';
+import { IObject } from '../interfaces';
 
 export default class RedirectResponse implements IRedirectResponse {
 	protected readonly _redirectUrl: string;
 	protected readonly _redirectData: IObject = {};
-	readonly redirectMethod?: "GET" | "POST";
+	readonly redirectMethod?: 'GET' | 'POST';
 	get redirectUrl(): string {
 		return this._redirectUrl;
 	}
@@ -15,7 +12,7 @@ export default class RedirectResponse implements IRedirectResponse {
 		return this._redirectData;
 	}
 	async redirect(): Promise<void> {
-		throw new Error("not impl");
+		throw new Error('not impl');
 	}
 	constructor(redirectUrl: string, redirectMethod: 'GET' | 'POST', redirectData: IObject = {}) {
 		this.redirectMethod = redirectMethod;

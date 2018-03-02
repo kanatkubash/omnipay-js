@@ -8,5 +8,5 @@ export default interface IResponse extends IMessage {
 	isCancelled?: boolean;
 	message?: string;
 	code?: string;
-	transactionRefernce?: string;
+	transactionReference?: string;
 }

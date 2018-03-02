@@ -1,20 +1,15 @@
-import * as _ from "lodash";
-import IHttpResponse from "../http/IHttpResponse";
+import * as _ from 'lodash';
 import RuntimeError from '../exception/RuntimeError';
-import IResponse from "./IResponse";
-import IRequest from "./IRequest";
+import IResponse from './IResponse';
+import IRequest from './IRequest';
 import RedirectResponse from './RedirectResponse';
-import IRedirectResponse from "./IRedirectResponse";
-
-interface IObject {
-	[key: string]: any;
-}
+import IRedirectResponse from './IRedirectResponse';
+import { IObject } from './../interfaces';
 
 export default abstract class AbstractResponse implements IResponse {
 	protected readonly _request: IRequest;
 	protected _data: IObject = {};
 	abstract isSuccesful: boolean;
-	abstract transactionRefernce: string;
 	get request() {
 		return this._request;
 	}
@@ -44,20 +39,19 @@ export default abstract class AbstractResponse implements IResponse {
 	 */
 	get redirectResponse(): IRedirectResponse {
 		this.validateRedirect();
-		if (this.redirectMethod == 'GET')
+		if (this.redirectMethod === 'GET')
 			return new RedirectResponse(this.redirectUrl, 'GET');
-		else throw new RuntimeError('Not yet implemented');
-		///TODO: investigate whether we need POST version of the stuff above
+		throw new RuntimeError('Not yet implemented');
+		/// TODO: investigate whether we need POST version of the stuff above
 	}
 	public validateRedirect() {
 		if (!this.isRedirect)
 			throw new RuntimeError('This response does not support redirection.');
 		/// because redirectUrl might be null to prevent it we coalesce to empty value
+		// tslint:disable-next-line:strict-boolean-expressions
 		if (_.isEmpty((this.redirectUrl || '').trim()))
 			throw new RuntimeError('The given redirectUrl cannot be empty.');
 		if (!_.includes(['GET', 'POST'], this.redirectMethod))
 			throw new RuntimeError('Invalid redirect method', { method: this.redirectMethod });
 	}
-
-
 }

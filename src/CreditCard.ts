@@ -2,12 +2,8 @@ import { initialize as initializeHelper, validateLuhn } from './helpers';
 import CreditCardError from './exception/CreditCardError';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-interface IObject {
-	[key: string]: any;
-}
-interface ReadOnlyIObject {
-	readonly [key: string]: any;
-}
+import { IObject, ReadIObject } from './interfaces';
+
 export default class CreditCard {
 	//#region Brands
 	static readonly BRAND_VISA = 'visa';
@@ -23,8 +19,9 @@ export default class CreditCard {
 	static readonly BRAND_FORBRUGSFORENINGEN = 'forbrugsforeningen';
 	static readonly BRAND_LASER = 'laser';
 	//#endregion
-	private static readonly REGEX_MASTERCARD = /^(5[1-5]\d{4}|677189)\d{10}$|^2(?:2(?:2[1-9]|[3-9]\d)|[3-6]\d\d|7(?:[01]\d|20))\d{12}$/;
-	protected static readonly ALL_CARDS: ReadOnlyIObject = {
+	private static readonly REGEX_MASTERCARD
+		= /^(5[1-5]\d{4}|677189)\d{10}$|^2(?:2(?:2[1-9]|[3-9]\d)|[3-6]\d\d|7(?:[01]\d|20))\d{12}$/;
+	protected static readonly ALL_CARDS: ReadIObject = {
 		[CreditCard.BRAND_VISA]: /^4\d{12}(\d{3})?$/,
 		[CreditCard.BRAND_MASTERCARD]: CreditCard.REGEX_MASTERCARD,
 		[CreditCard.BRAND_DISCOVER]: /^(6011|65\d{2}|64[4-9]\d)\d{12}|(62\d{14})$/,
@@ -50,8 +47,10 @@ export default class CreditCard {
 		return this;
 	}
 	static get allCards(): IObject {
-		return _.reduce(CreditCard.ALL_CARDS, (acc, v, k) =>
-			Object.assign(acc, { [k]: v }), {});
+		return _.reduce(
+			CreditCard.ALL_CARDS,
+			(acc, v, k) => Object.assign(acc, { [k]: v }),
+			{});
 	}
 	/**
 	 * Return supported cards in form of {key:regex...}
@@ -67,12 +66,12 @@ export default class CreditCard {
 		return this._parameters['number'];
 	}
 	set number(value: string) {
-		var number = value ? value.replace(/\D/g, '') : null;
-		this._parameters['number'] = number;
+		const num = value ? value.replace(/\D/g, '') : null;
+		this._parameters['number'] = num;
 	}
 	get numberLastFour() {
-		var number = this.number;
-		return number ? number.substr(-4, 4) : null;
+		const num = this.number;
+		return num ? num.substr(-4, 4) : null;
 	}
 	//#region unnecessary fields
 	/// not needed for KZ
@@ -128,13 +127,13 @@ export default class CreditCard {
 		return this._parameters['firstName'];
 	}
 	set firstName(value: string) {
-		this._parameters['firstName'] = value;;
+		this._parameters['firstName'] = value;
 	}
 	get lastName() {
 		return this._parameters['lastName'];
 	}
 	set lastName(value: string) {
-		this._parameters['lastName'] = value;;
+		this._parameters['lastName'] = value;
 	}
 	get name() {
 		return this.firstName + ' ' + this.lastName;
@@ -147,14 +146,15 @@ export default class CreditCard {
 		this.lastName = lastName;
 	}
 	getNumberMasked(mask = 'X') {
-		var number = this.number;
-		if (number) {
-			var maskLen = Math.max(this.number.length - 4, 0);
+		const num = this.number;
+		if (num) {
+			const maskLen = Math.max(this.number.length - 4, 0);
 			return _.repeat(mask, maskLen) + this.numberLastFour;
 		}
 	}
 	get brand() {
 		if (this.number) {
+			// tslint:disable-next-line:prefer-const
 			for (var brand in CreditCard.ALL_CARDS) {
 				if (this.number.match(CreditCard.ALL_CARDS[brand]))
 					return brand;
@@ -196,17 +196,20 @@ export default class CreditCard {
 		return this._getTrackByPattern(/;\d{1,19}=\d{4}\d*\?/);
 	}
 	protected _getTrackByPattern(pattern: RegExp) {
-		var tracks, matches;
+		var tracks;
+		var matches;
 		if (tracks = this.tracks)
 			if (matches = tracks.match(pattern))
 				return matches[0];
 	}
 	validate() {
 		var fields: string[] = [];
-		var fields = ['number', 'expiryMonth', 'expiryYear'].reduce((acc, param: string) =>
-			this._parameters[param] ? acc : acc.concat(param), fields);
-		if (fields.length != 0)
-			throw new CreditCardError('Parameters not set', { keys: fields })
+		fields = ['number', 'expiryMonth', 'expiryYear'].reduce(
+			(acc, param: string) =>
+				this._parameters[param] ? acc : acc.concat(param),
+			fields);
+		if (fields.length !== 0)
+			throw new CreditCardError('Parameters not set', { keys: fields });
 		if (this.getExpiryDate('YYYYMM') < moment().format('YYYYMM'))
 			throw new CreditCardError('Card is expired', { expired: true });
 		if (!validateLuhn(this.number))

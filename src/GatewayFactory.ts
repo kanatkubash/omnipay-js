@@ -22,7 +22,7 @@ export class GatewayFactory {
 	}
 	/// TODO:require gateway dynamically
 	public create(name: string): any {
-		var gateway = this._gateways[name];
+		const gateway = this._gateways[name];
 		if (!gateway)
 			throw new Error('No such gateway');
 		return new gateway(this._client);
@@ -30,9 +30,8 @@ export class GatewayFactory {
 }
 
 export var gateway = (name: string): any => {
-	return <T extends AbstractGateway>(constructor: GatewayConstructor) => {
+	return (constructor: GatewayConstructor) => {
 		gateways[name] = constructor;
 		return constructor;
 	};
 };
-

@@ -2,12 +2,12 @@
   "name": "omnipay-js",
   "version": "0.0.1",
   "description": "Omnipay port JS",
-  "main": "Omnipay.ts",
+  "main": "src/main.ts",
   "scripts": {
     "test": "./node_modules/.bin/ts-mocha -p ./ ./test/*.spec.ts",
     "tsc": "tsc -p .",
     "tsc-test": "tsc -p ./test/",
-    "istanbul": "./node_modules/.bin/nyc mocha --require=ts-node/register  -- test/**/*.spec.ts && see coverage/index.html"
+    "nyc": "./node_modules/.bin/nyc mocha --require=ts-node/register  -- test/**/*.spec.ts && see coverage/index.html"
   },
   "author": "",
   "license": "ISC",

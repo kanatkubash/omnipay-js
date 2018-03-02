@@ -6,6 +6,7 @@ interface Currency {
 	rounding: number;
 	code: string;
 	name_plural: string;
+	numericCode: string;
 }
 type Currencies = 'USD' | 'CAD' | 'EUR' | 'BTC' | 'AED' | 'AFN'
 	| 'ALL' | 'AMD' | 'ARS' | 'AUD' | 'AZN' | 'BAM' | 'BDT'

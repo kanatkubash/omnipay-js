@@ -1,6 +1,7 @@
 import IItem from './IItem';
-import { initialize as initializeHelper } from './helpers'
+import { initialize as initializeHelper } from './helpers';
 import * as _ from 'lodash';
+
 interface IObject {
 	[key: string]: any;
 }

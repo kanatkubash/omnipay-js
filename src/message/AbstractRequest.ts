@@ -7,16 +7,9 @@ import RequestError from '../exception/RequestError';
 import CreditCard from '../CreditCard';
 import { initialize as initializeHelper } from '../helpers';
 import ItemBag from './../ItemBag';
-import Item from './../Item';
 import * as _ from 'lodash';
-/// REMARK: IF NOT TESTING COMMENT IT 
-import { Container, injectable, inject } from 'inversify';
+import { IObject } from '../interfaces';
 
-interface IObject {
-	[key: string]: any;
-}
-/// REMARK: IF NOT TESTING COMMENT IT 
-@injectable()
 export default abstract class AbstractRequest implements IRequest {
 	[key: string]: any;
 	abstract get data(): any;
@@ -80,41 +73,40 @@ export default abstract class AbstractRequest implements IRequest {
 		return Object.keys(Currencies);
 	}
 	get money(): Money {
-		var amount = this._parameters['amount'];
+		const amount = this._parameters['amount'];
 		// Not even called in tests, maybe remove
 		// if (amount instanceof Money);
 		// return amount;
 		if (amount) {
-			var currency = this.currency || 'KZT';
-			// tslint:disable-next-line:variable-name
-			var number = Number(amount);
-			if (Number.isNaN(number))
+			const currency = this.currency || 'KZT';
+			const num = Number(amount);
+			if (Number.isNaN(num))
 				throw new Error('Amount should be correct number');
-			var fractionCount = (number.toString(10).split('.')[1] || '').length;
+			const fractionCount = Number.isInteger(num) ? 0 : num.toString(10).split('.')[1].length;
 			if (fractionCount > Currencies[currency].decimal_digits)
 				throw new RequestError(`Precision is too high for given currency`, {
 					currency,
 					amount,
 				});
-			var money = Money.fromDecimal(number, currency);
+			const money = Money.fromDecimal(num, currency);
 			if (money.isNegative() && !this._negativeAmountAllowed)
-				throw new RequestError('Negative amount not allowed', { money: money.getAmount() })
+				throw new RequestError('Negative amount not allowed', { money: money.getAmount() });
 			if (money.isZero() && !this._zeroAmountAllowed)
-				throw new RequestError('Zero amount not allowed', { money: money.getAmount() })
+				throw new RequestError('Zero amount not allowed', { money: money.getAmount() });
 			return money;
 		}
 	}
 	get amount() {
-		var money = this.money;
+		const money = this.money;
 		if (money)
 			return money.toString();
 	}
 	set amount(value: string) {
 		this.throwIfCantSet;
-		this._parameters['amount'] = value;;
+		this._parameters['amount'] = value;
 	}
 	get amountInteger(): number {
-		var money = this.money;
+		const money = this.money;
 		if (money)
 			return money.getAmount();
 	}
@@ -130,7 +122,8 @@ export default abstract class AbstractRequest implements IRequest {
 	}
 	set currency(value: string) {
 		this.throwIfCantSet;
-		var newValue = (value || '').toUpperCase();
+		// tslint:disable-next-line:strict-boolean-expressions
+		const newValue = (value || '').toUpperCase();
 		if (this.currencies.indexOf(newValue) !== -1)
 			this._parameters['currency'] = newValue;
 	}
@@ -192,13 +185,13 @@ export default abstract class AbstractRequest implements IRequest {
 	/// issuer?
 	/// paymentMethod?
 	initialize(parameters: IObject = {}): this {
-		var fields = this.fields;
 		initializeHelper(this, parameters);
 		return this;
 	}
 	validate(...keys: string[]): true {
-		var unsetKeys: string[] = [];
+		const unsetKeys: string[] = [];
 		if (Array.isArray(keys))
+			// tslint:disable-next-line:no-increment-decrement
 			for (var i = 0; i < keys.length; i++)
 				if (typeof this._parameters[keys[i]] === 'undefined')
 					unsetKeys.push(keys[i]);

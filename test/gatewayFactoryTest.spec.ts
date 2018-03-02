@@ -14,35 +14,38 @@ import CreditCard from '../src/CreditCard';
 import { GatewayFactory, gateway as gatewayDecorator } from '../src/GatewayFactory';
 import AbstractGateway from '../src/AbstractGateway';
 import { IObject, ReadIObject } from '../src/interfaces';
+
 chai.use(require('sinon-chai'));
-var expect = chai.expect;
 require('mocha');
+const expect = chai.expect;
 
 class MoqClient implements IClient {
-	send(method: 'GET' | 'POST', uri: string, headers: Object, body: Object): IHttpResponse {
+	send(method: 'GET' | 'POST', uri: string, headers: Object, body: Object): Promise<IHttpResponse> {
 		throw new Error('Method not implemented.');
 	}
-	get(uri: string, headers: Object, queryObj: Object): IHttpResponse {
+	get(uri: string, headers: Object, queryObj: Object): Promise<IHttpResponse> {
 		throw new Error('Method not implemented.');
 	}
-	post(uri: string, headers: Object, postBody: Object): IHttpResponse {
+	post(uri: string, headers: Object, postBody: Object): Promise<IHttpResponse> {
 		throw new Error('Method not implemented.');
 	}
 }
 
 describe('GatewayFactory', () => {
-	var client = sinon.createStubInstance(MoqClient);
+	const client = sinon.createStubInstance(MoqClient);
+
 	it('should construct correctly', () => {
-		var gateway = new GatewayFactory(client);
+		const gateway = new GatewayFactory(client);
 		expect(gateway).to.be.instanceof(GatewayFactory);
-	})
+	});
+
 	it('should get gateways correctly', () => {
-		var gateway = new GatewayFactory(client);
-		console.log(gateway.gateways);
+		const gateway = new GatewayFactory(client);
 		expect(gateway.gateways).to.be.empty;
-	})
+	});
+
 	it('should add gateway correctly', async (done) => {
-		var gateway = new GatewayFactory(client);
+		const gateway = new GatewayFactory(client);
 
 		(() => {
 			@gatewayDecorator('MOQ')
@@ -55,9 +58,10 @@ describe('GatewayFactory', () => {
 			expect(gateway.create('MOQ')).to.have.property('name', 'NAME');
 			done();
 		})();
-	})
+	});
+
 	it('should throw when gateway is not found', () => {
-		var gateway = new GatewayFactory(client);
+		const gateway = new GatewayFactory(client);
 		expect(() => gateway.create('JOK_GATEWAY')).to.throw(Error);
-	})
+	});
 });

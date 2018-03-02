@@ -1,6 +1,5 @@
-interface IObject {
-	[key: string]: any;
-}
+import { IObject } from '../interfaces';
+
 export default class RuntimeError extends Error {
 	protected _data: IObject = {};
 	get data(): IObject {

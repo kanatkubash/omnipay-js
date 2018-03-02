@@ -1,30 +1,38 @@
 import { expect } from 'chai';
 import Item from '../src/Item';
 require('mocha');
+
 describe('Item', () => {
+
 	it('should construct with params', () => {
-		var item = new Item({ name: 'Jeski Disk' });
+		const item = new Item({ name: 'Jeski Disk' });
 		expect(item.name).to.equal('Jeski Disk');
-	})
+	});
+
 	it('should initalize without params', () => {
-		var item = new Item();
+		const item = new Item();
 		item.initialize();
 		expect(item.parameters).to.eql({});
-	})
+	});
+
 	it('shouldnot change parameters', () => {
-		var item = new Item({ name: 'Fuse Tea' });
+		const item = new Item({ name: 'Fuse Tea' });
 		item.parameters['name'] = 'Lipton';
 		expect(item.parameters['name']).to.equal('Fuse Tea');
-	})
-	var item = new Item();
+	});
+
+	const item = new Item();
+
 	it('should init correctly', () => {
 		item.initialize({ name: 'Mawina' });
 		expect(item.name).to.equal('Mawina');
-	})
+	});
+
 	it('should set only name', () => {
 		item.name = 'Kitap';
 		expect(item.parameters).to.deep.equal({ name: 'Kitap' });
-	})
+	});
+
 	it('should return correctly after setting properties', () => {
 		item.name = 'Fotik';
 		expect(item.name).to.equal('Fotik');
@@ -37,7 +45,7 @@ describe('Item', () => {
 		expect(item.parameters).to.deep.equal({
 			name: 'Fotik',
 			description: 'Nikon 7200',
-			price: 1500
+			price: 1500,
 		});
 		item.quantity = 2;
 		expect(item.quantity).to.equal(2);
@@ -45,7 +53,7 @@ describe('Item', () => {
 			name: 'Fotik',
 			description: 'Nikon 7200',
 			price: 1500,
-			quantity: 2
+			quantity: 2,
 		});
-	})
-})
+	});
+});

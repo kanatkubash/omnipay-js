@@ -1,8 +1,6 @@
-import * as _ from "lodash";
+import * as _ from 'lodash';
+import { IObject } from '../interfaces';
 
-interface IObject {
-	[key: string]: any;
-}
 export default class RequestError extends Error {
 	protected _data: IObject = {};
 	get data() {

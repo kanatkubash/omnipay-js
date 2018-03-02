@@ -1,6 +1,5 @@
-interface IObject {
-	[key: string]: string;
-}
+import { IObject } from '../interfaces';
+
 export default interface IHttpResponse {
 	headers: IObject;
 	body: any;

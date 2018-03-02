@@ -1,10 +1,9 @@
-interface IObject {
-	[key: string]: any;
-}
+import { IObject } from '../interfaces';
+
 interface CardErrorData extends IObject {
-	expired?: boolean,
-	keys?: string[],
-	invalidNumber?: boolean
+	expired?: boolean;
+	keys?: string[];
+	invalidNumber?: boolean;
 }
 export default class CreditCardError extends Error {
 	protected _data: CardErrorData = {

@@ -20,6 +20,17 @@
             "single"
         ],
         "no-var-keyword": false,
-        "prefer-const": false
+        "no-consecutive-blank-lines": true,
+        "function-name": [
+            true,
+            {
+                "function-regex": "^[a-z$][\\w\\d]+$",
+                "method-regex": "^[a-z$][\\w\\d]+$",
+                "private-method-regex": "^[a-z$][\\w\\d]+$",
+                "protected-method-regex": "^[a-z_$][\\w\\d]+$",
+                "static-method-regex": "^[a-z$][\\w\\d]+$"
+            }
+        ],
+        "no-unused-variable": true
     }
 }

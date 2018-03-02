@@ -77,8 +77,8 @@ export default abstract class AbstractGateway implements IGateway {
 	protected _createRequest<T extends AbstractRequest>(
 		tRequest: new (client: IClient) => T,
 		parameters: IObject = {}): T {
-		var request = new tRequest(this._httpClient);
-		request.initialize(parameters);
+		const request = new tRequest(this._httpClient);
+		request.initialize({ ...this.parameters, ...parameters });
 		return request;
 	}
 	// tslint:disable-next-line:function-name
