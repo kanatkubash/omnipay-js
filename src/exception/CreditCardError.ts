@@ -1,10 +1,5 @@
-import { IObject } from '../interfaces';
+import { CardErrorData } from '../interfaces';
 
-interface CardErrorData extends IObject {
-	expired?: boolean;
-	keys?: string[];
-	invalidNumber?: boolean;
-}
 export default class CreditCardError extends Error {
 	protected _data: CardErrorData = {
 	};

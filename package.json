@@ -1,11 +1,11 @@
 {
-  "name": "omnipay-ts",
-  "version": "0.0.2",
-  "description": "Omnipay port TS",
-  "main": "src/main.ts",
+  "name": "omnipay-js",
+  "version": "0.0.3",
+  "description": "Omnipay port JS",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/kanatkubash/omnipay-ts/"
+    "url": "https://bitbucket.org/kanatkubash/omnipay-js/"
   },
   "engines": {
     "node": ">=8.6.0"
@@ -17,13 +17,13 @@
   ],
   "scripts": {
     "test": "./node_modules/.bin/ts-mocha -p ./ ./test/*.spec.ts",
-    "compile": "tsc -p . && mv dist/main.js dist/index.js",
-    "compile-test": "tsc -p ./test/",
-    "nyc": "./node_modules/.bin/nyc mocha --require=ts-node/register  -- test/**/*.spec.ts && see coverage/index.html"
+    "build": "tsc -p .",
+    "build-test": "tsc -p ./test/",
+    "nyc": "export TS_NODE_PROJECT=./test && ./node_modules/.bin/nyc mocha --require=ts-node/register  -- test/**/*.spec.ts && see coverage/index.html"
   },
   "author": "Kanat Kubash",
   "license": "ISC",
-  "typings": "typings/index.d.ts",
+  "types": "dist/index.d.ts",
   "directories": {
     "lib": "src",
     "test": "test"

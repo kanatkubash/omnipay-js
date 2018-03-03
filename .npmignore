@@ -4,3 +4,4 @@ coverage
 php-omnipay-common
 test
 *.map
+src

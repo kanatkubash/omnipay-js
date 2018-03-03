@@ -3,7 +3,7 @@ import IClient from './http/IClient';
 
 export type GatewayConstructor = new (client: IClient) => AbstractGateway;
 
-interface GatewayIdentifier {
+export interface GatewayIdentifier {
 	[key: string]: GatewayConstructor;
 }
 

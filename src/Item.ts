@@ -1,10 +1,8 @@
 import IItem from './IItem';
 import { initialize as initializeHelper } from './helpers';
 import * as _ from 'lodash';
+import { IObject } from './interfaces';
 
-interface IObject {
-	[key: string]: any;
-}
 /**
  * Item class for representing items in basket
  */

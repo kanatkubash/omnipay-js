@@ -1,6 +1,6 @@
 import Item from './Item';
+import { ItemOrObj } from './interfaces';
 
-type ItemOrObj = Item | Partial<Item>;
 export default class ItemBag implements Iterable<Item>{
 	// tslint:disable-next-line:function-name
 	[Symbol.iterator](): Iterator<Item> {

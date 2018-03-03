@@ -1,4 +1,4 @@
-[PHP Omnipay library](https://github.com/thephpleague/omnipay-common) port to typesript
+[PHP Omnipay library](https://github.com/thephpleague/omnipay-common) port to typescript
 
 ### Summary ###
 
@@ -7,10 +7,9 @@ Code itself is written in Typescript 2.7
 
 ### Usage ###
 
-Install using `npm install omnipay-ts`
-In order to use with javascript , compile sources using `npm run compile` and refer to library by path like : 
+Install using `npm install omnipay-js`
 ```javascript
-const { AbstractGateway, AbstractRequest } = require('omnipay-ts/dist');
+const { AbstractGateway, AbstractRequest } = require('omnipay-js');
 ```
 
 Requires NodeJS version **high or equal to 8.6**

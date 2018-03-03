@@ -21,11 +21,10 @@ export default abstract class AbstractRequest implements IRequest {
 	get parameters(): IObject {
 		return _.clone(this._parameters);
 	}
-	get fields(): string[] {
-		return [
-			'code',
-		];
-	}
+	/**
+	 * Required fields for given request
+	 */
+	abstract requiredFields: string[];
 	get response() {
 		if (!this._response)
 			throw new Error('You must call send() before accessing response');

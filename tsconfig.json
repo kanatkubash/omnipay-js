@@ -9,21 +9,16 @@
         "experimentalDecorators": true,
         "moduleResolution": "node",
         "baseUrl": "./src",
-        // "allowSyntheticDefaultImports": true,
+        "declaration": true,
         "typeRoots": [
             "node_modules/@types",
             "typings"
         ],
         "types": [
-            "js-money",
-            "node",
-            "mocha",
-            "chai"
+            "js-money"
         ]
     },
     "exclude": [
-        "**/*.d.ts",
-        "**/*.spec.ts",
-        "../node_modules"
+        "**/*.spec.ts"
     ]
 }
